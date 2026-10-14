@@ -14,13 +14,13 @@ Marketplace 只做插件索引。每个 Plugin 单独安装、单独标版本。
 
 ## 安装 Marketplace
 
-GitHub 远程（把 `<GITHUB_OWNER>` 换成远程仓库所属账号，它不一定等于 Marketplace owner `z1m0n`）：
+GitHub 远程。仓库是 `zimondeng/skills`，Marketplace 名是 `zimondeng-skills`，两者不一样：
 
 ```bash
-claude plugin marketplace add <GITHUB_OWNER>/zimondeng-skills
+claude plugin marketplace add zimondeng/skills
 ```
 
-这个目录还没有远程仓库，所以上面的 owner 不能假定。本地目录（在本仓库根目录执行；会写入 Claude Code 设置，请自行运行）：
+本地目录（在本仓库根目录执行；会写入 Claude Code 设置，请自行运行）：
 
 ```bash
 claude plugin marketplace add .
