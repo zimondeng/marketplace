@@ -1,0 +1,5 @@
+interface:
+  display_name: "Setup Project Specs"
+  short_description: "Extract and maintain project engineering specs"
+policy:
+  allow_implicit_invocation: false

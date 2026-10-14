@@ -17,18 +17,26 @@ function insideRepo(repoRoot, target) {
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
 }
 
-// shortcut: single-line frontmatter keys only, upgrade when a skill needs nested YAML
+// shortcut: folded and literal scalars only, upgrade when a skill needs nested maps
 function parseFrontmatter(text) {
   const normalized = text.replace(/^﻿/, '');
   const match = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(normalized);
   if (!match) throw new Error('SKILL.md must start with a closed --- frontmatter block');
   const fields = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    if (!line.trim()) continue;
-    const parsed = /^([A-Za-z0-9_-]+):\s*(.*)$/.exec(line);
-    if (!parsed) throw new Error(`unsupported frontmatter line: ${line}`);
+  const lines = match[1].split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const parsed = /^([A-Za-z0-9_-]+):\s*(.*)$/.exec(lines[i]);
+    if (!parsed) throw new Error(`unsupported frontmatter line: ${lines[i]}`);
     let value = parsed[2].trim();
-    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    if (value === '>' || value === '|' || value === '>-' || value === '|-') {
+      const block = [];
+      while (i + 1 < lines.length && (lines[i + 1].startsWith(' ') || lines[i + 1].startsWith('\t') || !lines[i + 1].trim())) {
+        i++;
+        if (lines[i].trim()) block.push(lines[i].trim());
+      }
+      value = value.startsWith('|') ? block.join('\n') : block.join(' ');
+    } else if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
       value = value.slice(1, -1);
     }
     fields[parsed[1]] = value;
@@ -106,6 +114,8 @@ function selfTest() {
   const sample = '---\r\nname: hello\r\ndescription: "hi"\r\n---\r\n\nbody\n';
   const fields = parseFrontmatter(sample);
   if (fields.name !== 'hello' || fields.description !== 'hi') throw new Error('frontmatter self-test failed');
+  const folded = parseFrontmatter('---\nname: setup-project-specs\ndescription: >\n  Initialize specs.\n  From the repo.\n---\n');
+  if (folded.description !== 'Initialize specs. From the repo.') throw new Error('folded frontmatter self-test failed');
   if (!insideRepo(root, path.join(root, 'plugins'))) throw new Error('insideRepo self-test failed');
   if (insideRepo(root, path.resolve(root, '..'))) throw new Error('insideRepo parent self-test failed');
 }

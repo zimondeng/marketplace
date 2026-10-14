@@ -1,0 +1,8 @@
+{
+  "name": "zimondeng-skills",
+  "version": "0.1.0",
+  "description": "Initialize, update, and audit project-specific engineering conventions extracted from the repository's real code and docs.",
+  "author": {
+    "name": "z1m0n"
+  }
+}

@@ -1,15 +1,15 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "zimondeng-skills",
+  "name": "zimondeng-marketplace",
   "description": "A curated collection of Claude Code plugins and engineering skills.",
   "owner": {
     "name": "z1m0n"
   },
   "plugins": [
     {
-      "name": "hello-world",
-      "source": "./plugins/hello-world",
-      "description": "A minimal plugin for verifying zimondeng-skills marketplace installation."
+      "name": "zimondeng-skills",
+      "source": "./plugins/zimondeng-skills",
+      "description": "Initialize, update, and audit project-specific engineering conventions extracted from the repository's real code and docs."
     }
   ]
 }

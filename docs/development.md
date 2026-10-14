@@ -27,11 +27,11 @@ Marketplace → Plugin → Skill / Agent / Hook / MCP
 用户侧更新（官方命令）：
 
 ```bash
-claude plugin marketplace update zimondeng-skills
-claude plugin update hello-world@zimondeng-skills
+claude plugin marketplace update zimondeng-marketplace
+claude plugin update zimondeng-skills@zimondeng-marketplace
 ```
 
-会话内刷新目录是 `/plugin marketplace update zimondeng-skills`。
+会话内刷新目录是 `/plugin marketplace update zimondeng-marketplace`。
 
 自动更新不是 `marketplace.json` 的字段。用户在 `/plugin` 的 Marketplaces 里对这个 Marketplace 打开 Enable auto-update 之后，才会在后台更新。版本字符串不变时，已安装用户不会拿到新文件；本地目录方式添加的 Marketplace 除外，它每次会话直接读当前文件。
 

@@ -34,5 +34,5 @@ jobs:
         run: claude --version
       - name: Validate marketplace
         run: claude plugin validate --strict .
-      - name: Validate hello-world
-        run: claude plugin validate --strict ./plugins/hello-world
+      - name: Validate zimondeng-skills
+        run: claude plugin validate --strict ./plugins/zimondeng-skills
