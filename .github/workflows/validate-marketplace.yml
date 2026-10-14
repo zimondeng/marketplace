@@ -1,0 +1,38 @@
+name: validate-marketplace
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run repo constraint checks
+        run: node scripts/validate-marketplace.mjs
+
+  official:
+    name: claude plugin validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Claude Code CLI 2.1.294
+        run: npm install -g @anthropic-ai/claude-code@2.1.294
+      - name: Require the CLI
+        run: claude --version
+      - name: Validate marketplace
+        run: claude plugin validate --strict .
+      - name: Validate hello-world
+        run: claude plugin validate --strict ./plugins/hello-world

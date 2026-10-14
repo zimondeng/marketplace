@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "zimondeng-skills",
+  "description": "A curated collection of Claude Code plugins and engineering skills.",
+  "owner": {
+    "name": "z1m0n"
+  },
+  "plugins": [
+    {
+      "name": "hello-world",
+      "source": "./plugins/hello-world",
+      "description": "A minimal plugin for verifying zimondeng-skills marketplace installation."
+    }
+  ]
+}
