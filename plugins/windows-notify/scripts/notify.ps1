@@ -1,4 +1,4 @@
-# Claude Code Windows desktop notification
+﻿# Claude Code Windows desktop notification
 [Console]::InputEncoding = [Text.Encoding]::UTF8
 $data = [Console]::In.ReadToEnd() | ConvertFrom-Json
 

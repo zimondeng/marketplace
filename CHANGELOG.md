@@ -7,7 +7,7 @@
 ### Added
 
 - 注册插件 `zimondeng-skills` 0.1.0，包含技能 `setup-project-specs`。
-- 注册插件 `windows-notify` 0.2.0，包含 `Stop`、`Notification` hooks 和 `/windows-notify:setup` 清理命令。
+- 注册插件 `windows-notify` 0.2.1，包含 `Stop`、`Notification` hooks 和 `/windows-notify:setup` 清理命令；修复 Windows PowerShell 5.1 无法解析 UTF-8 中文脚本的问题。
 
 ### Removed
 

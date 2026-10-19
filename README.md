@@ -9,7 +9,7 @@ Marketplace 只做插件索引。每个 Plugin 单独安装、单独标版本。
 | Plugin | Description | Version | Skills | 安装 |
 | --- | --- | --- | --- | --- |
 | zimondeng-skills | Initialize, update, and audit project-specific engineering conventions extracted from the repository's real code and docs. | 0.1.0 | setup-project-specs | `claude plugin install zimondeng-skills@zimondeng-marketplace` |
-| windows-notify | Send Windows desktop notifications when Claude Code finishes or needs attention. | 0.2.0 | claude-notify | `claude plugin install windows-notify@zimondeng-marketplace` |
+| windows-notify | Send Windows desktop notifications when Claude Code finishes or needs attention. | 0.2.1 | claude-notify | `claude plugin install windows-notify@zimondeng-marketplace` |
 
 版本来自各插件的 `plugin.json`，不写在 `marketplace.json`。调用 `claude-notify` 用 `/windows-notify:claude-notify`。
 
