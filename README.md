@@ -24,7 +24,7 @@ Marketplace 是插件索引。先添加 Marketplace，之后才能按插件名�
 GitHub 远程仓库：
 
 ```bash
-claude plugin marketplace add zimondeng/marketsplace
+claude plugin marketplace add zimondeng/marketplace
 ```
 
 这里的仓库名是 `marketsplace`（拼写如此），Marketplace 名称是 `zimondeng-marketplace`。
