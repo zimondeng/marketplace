@@ -9,61 +9,143 @@ Marketplace 只做插件索引。每个 Plugin 单独安装、单独标版本。
 | Plugin | Description | Version | Skills | 安装 |
 | --- | --- | --- | --- | --- |
 | zimondeng-skills | Initialize, update, and audit project-specific engineering conventions extracted from the repository's real code and docs. | 0.1.0 | setup-project-specs | `claude plugin install zimondeng-skills@zimondeng-marketplace` |
+| windows-notify | Send Windows desktop notifications when Claude Code finishes or needs attention. | 0.2.0 | claude-notify | `claude plugin install windows-notify@zimondeng-marketplace` |
 
-版本来自各插件的 `plugin.json`，不写在 `marketplace.json`。调用 `setup-project-specs` 用 `/zimondeng-skills:setup-project-specs`。
+版本来自各插件的 `plugin.json`，不写在 `marketplace.json`。调用 `claude-notify` 用 `/windows-notify:claude-notify`。
 
-## 安装 Marketplace
+Windows 通知插件安装后会自动启用 `Stop` 和 `Notification` hooks。若之前配置过全局通知 hook，可执行 `/windows-notify:setup` 清理旧的重复配置。
 
-GitHub 远程。仓库是 `zimondeng/marketsplace`，Marketplace 名是 `zimondeng-marketplace`，两者不一样：
+## 使用教程
+
+### 1. 添加整个 Marketplace
+
+Marketplace 是插件索引。先添加 Marketplace，之后才能按插件名称安装其中的插件。
+
+GitHub 远程仓库：
 
 ```bash
 claude plugin marketplace add zimondeng/marketsplace
 ```
 
-本地目录（在本仓库根目录执行；会写入 Claude Code 设置，请自行运行）：
+这里的仓库名是 `marketsplace`（拼写如此），Marketplace 名称是 `zimondeng-marketplace`。
+
+如果要使用本地工作区版本，在仓库根目录执行：
 
 ```bash
 claude plugin marketplace add .
 ```
 
-## 安装插件
+查看已经添加的 Marketplace：
 
-先装好 Marketplace，再执行：
+```bash
+claude plugin marketplace list
+```
+
+也可以在 Claude Code 中执行：
+
+```text
+/plugin
+```
+
+然后进入 Marketplaces 查看状态。
+
+### 2. 安装当前仓库中的插件
+
+先添加 `zimondeng-marketplace`，再按需安装插件。当前仓库提供以下插件：
+
+#### zimondeng-skills
+
+安装：
 
 ```bash
 claude plugin install zimondeng-skills@zimondeng-marketplace
 ```
 
-安装 id 是 `<entry name>@<marketplace name>`。
-
-## 使用 Skill
+安装后使用：
 
 ```text
 /zimondeng-skills:setup-project-specs
 ```
 
-按技能里的 init、update 或 audit 模式执行。它只写 `docs/agent-spec/**` 和约定的说明文件，不改业务代码。
+该 Skill 用于初始化、更新和审计项目工程规范，只写入 `docs/agent-spec/**` 及约定的说明文件，不修改业务代码。
 
-## 更新 Marketplace
+#### windows-notify
 
-没有打开自动更新时，用官方命令拉取：
+安装：
+
+```bash
+claude plugin install windows-notify@zimondeng-marketplace
+```
+
+安装后，`Stop` 和 `Notification` hooks 会自动生效。执行以下命令可以清理旧的全局通知 hook，避免重复通知：
+
+```text
+/windows-notify:setup
+```
+
+该插件还提供说明 Skill：
+
+```text
+/windows-notify:claude-notify
+```
+
+### 3. 更新 Marketplace 和插件
+
+远程仓库有更新时，先更新 Marketplace 索引：
 
 ```bash
 claude plugin marketplace update zimondeng-marketplace
-claude plugin update zimondeng-skills@zimondeng-marketplace
 ```
 
-会话内也可以执行 `/plugin marketplace update zimondeng-marketplace`。
+再更新已经安装的插件：
 
-自动更新要在 `/plugin` → Marketplaces 里对本 Marketplace 选择 Enable auto-update。`marketplace.json` 没有开关字段。已发布安装只在插件 `version` 变化后才会换新副本。
+```bash
+claude plugin update zimondeng-skills@zimondeng-marketplace
+claude plugin update windows-notify@zimondeng-marketplace
+```
 
-移除本地试验用的 Marketplace：
+如果只更新其中一个插件，只执行对应的命令即可。插件只有在 `plugin.json` 的 `version` 发生变化后，更新命令才会获取新的插件版本。
+
+### 4. 启用自动更新
+
+在 Claude Code 中执行：
+
+```text
+/plugin
+```
+
+进入 Marketplaces，为 `zimondeng-marketplace` 选择 **Enable auto-update**。自动更新开关由 Claude Code 管理，不写在 `marketplace.json` 中。
+
+### 5. 查看、禁用和移除
+
+查看已安装插件：
+
+```bash
+claude plugin list
+```
+
+在 Claude Code 中打开 `/plugin`，可以对单个插件执行启用、禁用或卸载操作。
+
+移除整个 Marketplace：
 
 ```bash
 claude plugin marketplace remove zimondeng-marketplace
 ```
 
-这会卸载它安装的插件。
+这会同时移除通过该 Marketplace 安装的插件。
+
+### 6. 本地开发和校验
+
+在仓库根目录执行：
+
+```bash
+node scripts/validate-marketplace.mjs
+claude plugin validate --strict .
+claude plugin validate --strict ./plugins/zimondeng-skills
+claude plugin validate --strict ./plugins/windows-notify
+```
+
+本地 Marketplace 添加后，工作区文件会直接生效；远程安装用户则需要先更新 Marketplace，再更新具体插件。
 
 ## 开发指南
 
@@ -88,6 +170,12 @@ docs/development.md
 plugins/zimondeng-skills/
   .claude-plugin/plugin.json
   skills/setup-project-specs/SKILL.md
+plugins/windows-notify/
+  .claude-plugin/plugin.json
+  hooks/hooks.json
+  commands/setup.md
+  scripts/notify.ps1
+  skills/claude-notify/SKILL.md
 scripts/validate-marketplace.mjs
 templates/plugin-template/
 CHANGELOG.md

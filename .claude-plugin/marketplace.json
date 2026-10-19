@@ -10,6 +10,11 @@
       "name": "zimondeng-skills",
       "source": "./plugins/zimondeng-skills",
       "description": "Initialize, update, and audit project-specific engineering conventions extracted from the repository's real code and docs."
+    },
+    {
+      "name": "windows-notify",
+      "source": "./plugins/windows-notify",
+      "description": "Send Windows desktop notifications when Claude Code finishes or needs attention."
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "name": "windows-notify",
+  "version": "0.2.0",
+  "description": "Send Windows desktop notifications when Claude Code finishes or needs attention.",
+  "author": {
+    "name": "z1m0n"
+  }
+}
