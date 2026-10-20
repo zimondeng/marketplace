@@ -56,7 +56,7 @@ CLI 的遥测默认开启。本地有 `.codegraph/` 不等于没有数据离开�
 python tests/test_spec_tools.py
 ```
 
-2026-10-14：21 项通过。覆盖发现（含密钥文件名但不读内容、`packages` 目录不是 monorepo、单个 Gradle `include` 不是 monorepo）、检索计划（MCP、CLI、未索引、未安装，且计划里永远没有 install/init/index/sync）、托管块幂等与 CRLF、人工区域不被草稿改写、只读检查、两个夹具里重复代码形态还在。
+2026-10-14：原有测试覆盖发现（含密钥文件名但不读内容、`packages` 目录不是 monorepo、单个 Gradle `include` 不是 monorepo）、检索计划（MCP、CLI、未索引、未安装，且计划里永远没有 install/init/index/sync）、托管块幂等与 CRLF、人工区域不被草稿改写、只读检查、两个夹具里重复代码形态还在。`tests/test_spec_tools.py` 另外覆盖 `PROJECT-SPECS`、CodeGraph 和 Agent skills 外部维护区块不会被当作指令证据。
 
 ## 夹具运行
 

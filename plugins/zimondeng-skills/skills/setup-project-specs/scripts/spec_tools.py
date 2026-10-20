@@ -20,6 +20,8 @@ from pathlib import Path
 
 START = "<!-- PROJECT-SPECS:START -->"
 END = "<!-- PROJECT-SPECS:END -->"
+CODEGRAPH_START = "<!-- CODEGRAPH:START -->"
+CODEGRAPH_END = "<!-- CODEGRAPH:END -->"
 HUMAN_START = "<!-- agent-spec:human:start -->"
 HUMAN_END = "<!-- agent-spec:human:end -->"
 GENERATED = "<!-- agent-spec:generated -->"
@@ -653,8 +655,10 @@ def _explicit_evidence_quotes(text: str) -> list[str]:
 
 def _instruction_lines(text: str) -> list[str]:
     # shortcut: one physical line is one sentence. Upgrade when instruction files wrap a sentence across lines.
-    if START in text and END in text:
-        text = re.sub(re.escape(START) + r".*?" + re.escape(END), "", text, flags=re.DOTALL)
+    for start, end in ((START, END), (CODEGRAPH_START, CODEGRAPH_END)):
+        if start in text and end in text:
+            text = re.sub(re.escape(start) + r".*?" + re.escape(end), "", text, flags=re.DOTALL)
+    text = re.sub(r"(?ms)^#{1,6}\s+Agent skills\b.*\Z", "", text)
     lines: list[str] = []
     for raw in text.splitlines():
         line = raw.strip()
